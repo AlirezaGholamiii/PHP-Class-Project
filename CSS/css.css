@@ -1,0 +1,25 @@
+.color{
+    background-color: lightslategray;
+}
+
+.Ad{
+    width: 125px;
+    height: 125px;
+}
+
+.text-red{
+    color: red;
+}
+
+.text-blue{
+    color: blue;
+}
+
+.text-black{
+    color: black;
+}
+
+h1{align-content: center;
+   color: greenyellow;
+   border-color:brown;
+}
