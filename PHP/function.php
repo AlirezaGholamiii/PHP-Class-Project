@@ -6,6 +6,7 @@
 #declare content
 define("MAKE_MAX_LENGHT", 10);
 define("MODEL_MAX_LENGHT", 15);
+define("product_MAX_LENGHT", 12);
 define("Year_MIN_LENGHT", 1900);
 #declare global variable
 define("FOLDER_CSS_FUNCTION", 'CSS/');
@@ -84,15 +85,42 @@ $errorMake = "";
 $errorModel = "";
 $errorYear = "";
 $errorStatus = "";
+$errorProduct = "";
     
 $Model="";
 $Year="";
 $make="";
 $status ="";
+$product ="";
+
+  
     
     #check if the save button has been clicked
     if(isset($_POST["save"]))
     {
+        $product = htmlspecialchars(trim($_POST["product"]));
+        if(! $product == "")
+        {
+            if(! (substr($product, 0,1) == "P" ||  substr($product, 0,1) == "p"))
+            {
+                $errorProduct = "The first word must be P or p.";
+            }
+            elseif (mb_strlen($product) > product_MAX_LENGHT) 
+            {
+                $errorProduct ="The Product cannot contain more than ". product_MAX_LENGHT . " Character";
+            }
+            
+            
+        }
+        else 
+        {
+            $errorProduct = "The product number can not be empty";
+        }
+        
+        
+        
+        
+        
         #check the make is emty
         $make = htmlspecialchars(trim($_POST["make"]));
         if($make == "")
@@ -155,8 +183,11 @@ $status ="";
             }
         }
         
+       
+      
+        
         #after all validation check if the errors found
-        if($errorMake== "" && $errorModel== "" && $errorYear== "" && $errorStatus=="")
+        if($errorMake== "" && $errorModel== "" && $errorYear== "" && $errorStatus=="" && $errorProduct="")
         {
             header('Location: Succeed.php');
             die();
@@ -165,6 +196,7 @@ $status ="";
             $Year="";
             $make="";
             $status="";
+            $product="";
              
             echo "Comgrats, You made a purchess";
         }
@@ -178,6 +210,16 @@ $status ="";
     ?>
         <form action="index.php" method="post">
          
+            <p>
+            <label>Product:</label><br>
+            <input type="text" name="product"  value="<?php echo $product ?>"><br>
+            <span style="color: red">
+                <?php echo $errorProduct; ?>
+            </span>
+        </p>
+            
+            
+            
         <p>
             <label>Make:</label><br>
             <input type="text" name="make"  value="<?php echo $make ?>"><br>
@@ -313,11 +355,6 @@ function colorText()
     </div>
     <?php
 }
-
-
-
-
-
 
 
 
