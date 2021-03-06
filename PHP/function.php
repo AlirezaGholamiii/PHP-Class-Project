@@ -68,7 +68,7 @@ function createPageFooter()
     ?>
         </body>
         <footer>
-            <br><br>CopyRight KS  <?php echo date('Y'); ?>
+            <br><br>CopyRight Alireza Gholami (1931230)  <?php echo date('Y'); ?>
         </footer>
       </html>
     
@@ -357,5 +357,40 @@ function colorText()
 }
 
 
+
+function manageError($errorNumber, $errorString, $errorFile, $errorLine)
+{
+    global $debug;
+    
+    #generic message for end-user
+    echo "An error occured on the website. Please counsult the log for more details";
+    
+    #detaild info for the developers (dont use echo)
+    #save this into the file insted of using echo
+    if($debug == true)
+    {
+    echo "An error occured in the file" . $errorFile . "on line" . $errorLine 
+            . " Error: $errorNumber - $errorString";
+    }
+    else
+    {
+        #save the same info in the file
+    }
+            die();
+}
+
+function manageExceptions($error)
+{
+    #generic message for end-user
+    echo "\nAn exception occured on the website. Please consult the log for more details";
+    
+    #detailed info for developers (dont use echo)
+    echo "An error occured in the file " . $error->getFile() . " On Line " .
+            $error->getLine() . " Error" . $error->getMessage();
+    
+            die();
+}
+#error_reporting(0);
+#error_reporting(E_ALL);
 
 ?>
