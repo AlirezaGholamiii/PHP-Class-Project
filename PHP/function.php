@@ -16,7 +16,8 @@ define("FOLDER_IMAGES_FUNCTION", 'images/');
 define("FILE_IMAGES_FUNCTION", FOLDER_IMAGES_FUNCTION ."logo.png");
 
 
-    
+ #variable for cookie
+$firstname="";
 function createPageHeder($TitleName)
 {
     #inside the PHP 
@@ -30,6 +31,7 @@ function createPageHeder($TitleName)
     <link rel="stylesheet" href="<?php echo FILE_CSS_FUNCTION; ?>"/> 
     <?php CreateLogo(); ?>
     <html><head><meta charset="UTF-8"><title><?php echo $TitleName ?></title></head><body class="color">
+            
             
                 
     welcome to kasra's web page
@@ -337,6 +339,7 @@ function colorText()
         {
             if($color == "blue")
             {
+                
                 $color = "text-blue";
             }
             else
@@ -393,4 +396,53 @@ function manageExceptions($error)
 #error_reporting(0);
 #error_reporting(E_ALL);
 
-?>
+
+function createCookie()
+{
+    if(isset($_POST["firstname"]))
+    {
+        #set cookie and specify a time to expire
+        #setcookie("firstname", htmlspecialchars($_POST["firstname"]), time() + 10);
+        #because we dont use HTTPS we have to use :
+        setcookie("firstname", htmlspecialchars($_POST["firstname"]), time() + 60 * 60,
+                "",   "",    false,  true);
+                #path #domin #secure #http
+        
+        #reload the page...
+        header('Location: index.php');
+        exit();
+        
+    }
+}
+
+function readCookie()
+{
+    #use the golobal variable named firstName"
+    global $firstname;
+    if(isset($_COOKIE["firstname"]))
+    {
+        $firstname = $_COOKIE["firstname"];
+        
+        #I am ACtive on website
+        setcookie("firstname", $_COOKIE["firstname"] , time() + 10,
+                "",   "",    false,  true);
+                #path #domin #secure #http
+    }
+    else
+    {
+        $firstname = "";
+    }
+}
+
+function deleteCookie()
+{
+    #use - sign to make the cookie already expired (in the past) 
+        #set cookie and specify a time to expire
+        setcookie("firstname", "", time() - 60 * 60 * 24);
+    
+        #reload the page...
+        header('Location: index.php');
+        exit();
+
+}
+    ?>
