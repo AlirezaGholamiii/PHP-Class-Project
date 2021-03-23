@@ -1,0 +1,42 @@
+To add a new certificate and enter tp https
+
+1- download cygwin from cygwin.com
+2- install it in C:\cygwin64
+3- open cmd
+4- c:\cygwin64\bin\openssl req -x509 -newkey rsa:4096 -days 365 -nodes -keyout kasra.key -out kasra.crt
+5- file should be created in (c:\users\kasra\)
+6- copy the .crt file into c:\xampp\apache\conf\ssl.crt folder
+7- copy the .key file into c:\xampp\apache\conf\ssl.key folder
+8- edit the httpd-ssl.conf file :
+	A)SSLCertificateFileConf/ssl.crt/kasra.crt
+	B)SSLCertificateKeyFileConf/ssl.key/kasra.key
+9- restart Apache
+10-call your website https://localhost/website
+11-reviw certificate info and authorize the certificate
+
+
+----------------------------------------------------------------------------------------------------------
+			cmd output
+
+C:\Users\kasra>c:\cygwin64\bin\openssl req -x509 -newkey rsa:4096 -days 365 -nodes -keyout kasra.key -out kasra.crt
+Generating a RSA private key
+............................++++
+.....................................................................................................................................................................................................................++++
+writing new private key to 'kasra.key'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [XX]:CA
+State or Province Name (full name) []:Quebec
+Locality Name (eg, city) [Default City]:Montreal
+Organization Name (eg, company) [Default Company Ltd]:KS inc.
+Organizational Unit Name (eg, section) []:Kasra Gholami
+Common Name (eg, your name or your server's hostname) []:Alireza Gholami
+Email Address []:Kasragholami47@yahoo.com
+
+C:\Users\kasra>
