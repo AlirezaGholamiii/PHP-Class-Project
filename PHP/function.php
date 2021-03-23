@@ -397,6 +397,8 @@ function manageExceptions($error)
 #error_reporting(E_ALL);
 
 
+session_start();
+
 function createCookie()
 {
     if(isset($_POST["firstname"]))
@@ -404,9 +406,12 @@ function createCookie()
         #set cookie and specify a time to expire
         #setcookie("firstname", htmlspecialchars($_POST["firstname"]), time() + 10);
         #because we dont use HTTPS we have to use :
-        setcookie("firstname", htmlspecialchars($_POST["firstname"]), time() + 60 * 60,
-                "",   "",    false,  true);
+        #in session mode we dont need expirition date
+//        setcookie("firstname", htmlspecialchars($_POST["firstname"]), time() + 60 * 60,
+//                "",   "",    false,  true);
                 #path #domin #secure #http
+        
+        $_SESSION["firstname"] = htmlspecialchars($_POST["firstname"]);
         
         #reload the page...
         header('Location: index.php');
@@ -419,13 +424,15 @@ function readCookie()
 {
     #use the golobal variable named firstName"
     global $firstname;
-    if(isset($_COOKIE["firstname"]))
+    //if(isset($_COOKIE["firstname"]))
+    if(isset($_SESSION["firstname"]))
     {
-        $firstname = $_COOKIE["firstname"];
+        $firstname = $_SESSION["firstname"];
         
         #I am ACtive on website
-        setcookie("firstname", $_COOKIE["firstname"] , time() + 10,
-                "",   "",    false,  true);
+        #in session mode we dont need expirition date
+//        setcookie("firstname", $_COOKIE["firstname"]  , time() + 10,
+//                "",   "",    false,  true);
                 #path #domin #secure #http
     }
     else
@@ -438,7 +445,9 @@ function deleteCookie()
 {
     #use - sign to make the cookie already expired (in the past) 
         #set cookie and specify a time to expire
-        setcookie("firstname", "", time() - 60 * 60 * 24);
+//        setcookie("firstname", "", time() - 60 * 60 * 24);
+    #to remove the sessition
+    session_destroy();
     
         #reload the page...
         header('Location: index.php');
