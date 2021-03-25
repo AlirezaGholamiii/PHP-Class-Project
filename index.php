@@ -12,6 +12,13 @@ header("Expires: Sat, 06 Mar 2021 08:00:00 GMT");
 //set_error_handler("manageError");
 //set_exception_handler("manageExceptions");
 
+#to force the user to use https protocol
+if( !isset($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] != "on")
+{
+    header('Location: https://' . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
+}
+
     #this blockof code must place before the html code because it works with headers
     #check if the save button has been clicked
     if(isset($_POST["login"]))
